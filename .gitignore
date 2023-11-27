@@ -16,3 +16,6 @@ description-pak
 dist
 doc-pak
 nosetests.xml
+
+venv
+.idea

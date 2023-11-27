@@ -3,31 +3,16 @@
 NAME='wstool'
 VERSION=$(shell grep version ./src/wstool/__version__.py | sed 's,version = ,,')
 
-OUTPUT_DIR=deb_dist
 
-
-all:
+all: build
 	echo "noop for debbuild"
 
-setup:
+info:
 	echo "building version ${VERSION}"
 
-clean_dist:
+clean:
 	-rm -rf src/wstool.egg-info
 	-rm -rf dist
-	-rm -rf deb_dist
 
-distro: setup clean_dist
-	python setup.py sdist
-
-clean: clean_dist
-
-
-install: distro
-	sudo checkinstall python setup.py install
-
-testsetup:
-	echo "running tests"
-
-test: testsetup
-	nosetests --with-coverage --cover-package=wstool
+build: info clean
+	python -m build

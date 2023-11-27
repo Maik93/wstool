@@ -1,2 +1,3 @@
-vcstools>=0.1.42
-pyyaml
+vcstools~=0.1.42
+pyyaml~=6.0.1
+setuptools~=68.2.0
