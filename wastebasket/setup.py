@@ -8,7 +8,7 @@ import imp
 import argparse
 
 
-with open('README.rst') as readme_file:
+with open('README.md') as readme_file:
     README = readme_file.read()
 
 

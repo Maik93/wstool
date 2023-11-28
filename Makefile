@@ -1,11 +1,10 @@
-.PHONY: all setup clean_dist distro clean install testsetup test
+.PHONY: all info clean install
 
 NAME='wstool'
 VERSION=$(shell grep version ./src/wstool/__version__.py | sed 's,version = ,,')
 
 
-all: build
-	echo "noop for debbuild"
+all: install
 
 info:
 	echo "building version ${VERSION}"
@@ -16,3 +15,6 @@ clean:
 
 build: info clean
 	python -m build
+
+install: build
+    pip install dist/wstool-${VERSION}-py3-none-any.whl
