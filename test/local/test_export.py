@@ -50,7 +50,7 @@ class WstoolExportTest(AbstractSCMTest):
         AbstractSCMTest.setUpClass()
         self.remote_path = os.path.join(self.test_root_path, 'remote')
         self.new_remote_path = os.path.join(self.test_root_path, 'fooo')
-        self.version = 'master'
+        self.version = 'main'
         self.branch = 'test_branch'
         self.date = datetime.date.today().isoformat()
         os.makedirs(self.remote_path)

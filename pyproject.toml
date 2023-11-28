@@ -1,13 +1,23 @@
-[project]
+[tool.poetry]
 name = "wstool"
 version = "0.2.0"
-requires-python = ">=3.8"
-dependencies = ["vcstools~=0.1.42", "pyyaml~=6.0.1"]
-readme = "README.rst"
+description = ""
+authors = ["Michael Mugnai <michael.mugnai@gmail.com>"]
+license = "BSD"
+readme = "README.md"
 
-[project.scripts]
-wstool = "wstool.wstool_cli:wstool_main"
+[tool.poetry.dependencies]
+python = ">=3.8"
+vcstools = "~=0.1.42"
+PyYAML = "~=6.0.1"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.3"
+mock = "^5.1.0"
 
 [build-system]
-requires = ["setuptools>=61.0"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["test"]

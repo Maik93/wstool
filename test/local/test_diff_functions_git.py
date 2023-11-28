@@ -221,7 +221,7 @@ class WstoolInfoGitTest(AbstractSCMTest):
         wstool_main(cmd)
         output = output.getvalue()
         tokens = _nth_line_split(-2, output)
-        self.assertEqual(['clone', 'git', 'master', '(-)', self.version_end, self.remote_path], tokens)
+        self.assertEqual(['clone', 'git', 'main', '(-)', self.version_end, self.remote_path], tokens)
 
         # test when remote version is different
         subprocess.check_call(["git", "reset", "--hard", "HEAD~1"], cwd=self.clone_path)
@@ -229,7 +229,7 @@ class WstoolInfoGitTest(AbstractSCMTest):
         wstool_main(cmd)
         output = output.getvalue()
         tokens = _nth_line_split(-2, output)
-        self.assertEqual(['clone', 'C', 'git', 'master', '(-)', self.version_init, self.remote_path], tokens)
+        self.assertEqual(['clone', 'C', 'git', 'main', '(-)', self.version_init, self.remote_path], tokens)
         # return branch back to original revision
         subprocess.check_call(["git", "reset", "--hard", self.version_end], cwd=self.clone_path)
 
@@ -239,7 +239,7 @@ class WstoolInfoGitTest(AbstractSCMTest):
         wstool_main(cmd)
         output = output.getvalue()
         tokens = _nth_line_split(-2, output)
-        self.assertEqual(['clone', 'M', 'git', 'master', '(-)', self.version_end, self.remote_path], tokens)
+        self.assertEqual(['clone', 'M', 'git', 'main', '(-)', self.version_end, self.remote_path], tokens)
 
         subprocess.check_call(["rm", ".rosinstall"], cwd=self.local_path)
         _add_to_file(os.path.join(self.local_path, ".rosinstall"), "- other: {local-name: ../ros}\n- git: {local-name: clone, uri: ../remote, version: \"footag\"}")
@@ -248,16 +248,16 @@ class WstoolInfoGitTest(AbstractSCMTest):
         wstool_main(cmd)
         output = output.getvalue()
         tokens = _nth_line_split(-2, output)
-        self.assertEqual(['clone', 'MV', 'git', 'master', '(footag)', self.version_end, "(%s)" % self.version_init, self.remote_path], tokens)
+        self.assertEqual(['clone', 'MV', 'git', 'main', '(footag)', self.version_end, "(%s)" % self.version_init, self.remote_path], tokens)
         # test when tracking branch is different from current branch
         subprocess.check_call(["git", "checkout", "-b", "test_branch"], cwd=self.clone_path)
         subprocess.check_call(["git", "config", "--replace-all", "branch.test_branch.remote", "origin"], cwd=self.clone_path)
-        subprocess.check_call(["git", "config", "--replace-all", "branch.test_branch.merge", "master"], cwd=self.clone_path)
+        subprocess.check_call(["git", "config", "--replace-all", "branch.test_branch.merge", "main"], cwd=self.clone_path)
         sys.stdout = output = StringIO()
         wstool_main(cmd)
         output = output.getvalue()
         tokens = _nth_line_split(-2, output)
-        self.assertEqual(['clone', 'MV', 'git', 'test_branch', '<', 'master', '(footag)', self.version_end, "(%s)" % self.version_init, self.remote_path], tokens)
+        self.assertEqual(['clone', 'MV', 'git', 'test_branch', '<', 'main', '(footag)', self.version_end, "(%s)" % self.version_init, self.remote_path], tokens)
 
         # test when remote is different from origin by rename
         subprocess.check_call(["git", "remote", "rename", "origin", "remote2"], cwd=self.clone_path)
@@ -266,7 +266,7 @@ class WstoolInfoGitTest(AbstractSCMTest):
         wstool_main(cmd)
         output = output.getvalue()
         tokens = _nth_line_split(-2, output)
-        self.assertEqual(['clone', 'MV', 'git', 'test_branch', '<', 'remote2/master', '(footag)', self.version_end, "(%s)" % self.version_init, "(%s)" % self.remote_path], tokens)
+        self.assertEqual(['clone', 'MV', 'git', 'test_branch', '<', 'remote2/main', '(footag)', self.version_end, "(%s)" % self.version_init, "(%s)" % self.remote_path], tokens)
         # return remote name to origin
         subprocess.check_call(["git", "remote", "rename", "remote2", "origin"], cwd=self.clone_path)
 
@@ -285,11 +285,11 @@ class WstoolInfoGitTest(AbstractSCMTest):
         wstool_main(cmd + ['--fetch'])
         output = output.getvalue()
         tokens = _nth_line_split(-2, output)
-        self.assertEqual(['clone', 'MV', 'git', 'test_branch', '<', 'remote2/master', '(footag)', self.version_end, "(%s)" % self.version_init, self.remote_path], tokens)
+        self.assertEqual(['clone', 'MV', 'git', 'test_branch', '<', 'remote2/main', '(footag)', self.version_end, "(%s)" % self.version_init, self.remote_path], tokens)
 
 
-        # return branch back to master
-        subprocess.check_call(["git", "checkout", "master"], cwd=self.clone_path)
+        # return branch back to main
+        subprocess.check_call(["git", "checkout", "main"], cwd=self.clone_path)
 
         # using a denormalized local-name here
         subprocess.check_call(["rm", ".rosinstall"], cwd=self.local_path)
@@ -298,7 +298,7 @@ class WstoolInfoGitTest(AbstractSCMTest):
         wstool_main(cmd)
         output = output.getvalue()
         tokens = _nth_line_split(-2, output)
-        self.assertEqual(['clone', 'MV', 'git', 'master', '(footag)', self.version_end, "(%s)" %
+        self.assertEqual(['clone', 'MV', 'git', 'main', '(footag)', self.version_end, "(%s)" %
                          self.version_init, self.remote_path], tokens)
 
         # using an absolute path to clone dir here
@@ -308,7 +308,7 @@ class WstoolInfoGitTest(AbstractSCMTest):
         wstool_main(cmd)
         output = output.getvalue()
         tokens = _nth_line_split(-2, output)
-        self.assertEqual([self.clone_path, 'MV', 'git', 'master', '(footag)', self.version_end, "(%s)" % self.version_init, self.remote_path], tokens)
+        self.assertEqual([self.clone_path, 'MV', 'git', 'main', '(footag)', self.version_end, "(%s)" % self.version_init, self.remote_path], tokens)
 
         # using an absolute path here where relative path is shorter to display (also checks x for missing)
         subprocess.check_call(["rm", ".rosinstall"], cwd=self.local_path)

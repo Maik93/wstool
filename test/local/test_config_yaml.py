@@ -284,7 +284,7 @@ class ConfigFile_Test(unittest.TestCase):
 
     def setUp(self):
         self.uri = 'http://some/uri'
-        self.version = 'master'
+        self.version = 'main'
         self.git = 'ros'
         self.git_el = '- git: {{local-name: {0}, uri: \'{1}\', version: %s}}' \
             .format(self.git, self.uri)

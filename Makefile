@@ -14,7 +14,10 @@ clean:
 	-rm -rf dist
 
 build: info clean
-	python -m build
+	poetry build
 
 install: build
-    pip install dist/wstool-${VERSION}-py3-none-any.whl
+	pip install dist/wstool-${VERSION}-py3-none-any.whl
+
+test:
+	poetry run pytest
