@@ -21,3 +21,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 testpaths = ["test"]
+
+[tool.poetry.scripts]
+wstool = "wstool.wstool_cli:wstool_main"
