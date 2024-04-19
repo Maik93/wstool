@@ -19,13 +19,16 @@ jobs:
         python-version: ["3.8", "3.10", "3.11"]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
+        sudo apt update && sudo apt install -y bzr
+        echo "Python version $(python --version) running in $(which python)"
+        git config --global init.defaultBranch main
         python -m pip install --upgrade pip
         python -m pip install poetry
         python -m poetry install --with test
