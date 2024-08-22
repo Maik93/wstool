@@ -1,14 +1,14 @@
 # Maintainer: Michael Mugnai <michael.mugnai@gmail.com>
-pkgname=wstool
+pkgbase=wstool
+pkgname=('wstool' 'vcstools')
 pkgver=0.2.2
-pkgrel=1
+pkgrel=2
 pkgdesc="A tool for managing the workspace of a ROS package, resurrected for ROS2"
 arch=('any')
 url="https://github.com/IAS-PERCRO-LAB/wstool"
 license=('BSD')
 depends=(
     'python>=3.8'
-    'python-vcstools'
     'python-yaml'
 )
 makedepends=('poetry')
@@ -16,12 +16,18 @@ makedepends=('poetry')
 #     'python-pytest'
 #     'python-mock'
 # )
-source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
-sha256sums=('SKIP')
+source=(
+    "$pkgbase-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz"
+    "vcstools::git+https://github.com/IAS-PERCRO-LAB/vcstools.git"
+)
+sha256sums=('SKIP' 'SKIP')
 
 build() {
-    cd "$srcdir/$pkgname-$pkgver"
+    cd "$srcdir/$pkgbase-$pkgver"
     poetry build
+
+    cd "$srcdir/vcstools"
+    python setup.py build
 }
 
 # check() {
@@ -29,7 +35,14 @@ build() {
 # 	poetry run pytest
 # }
 
-package() {
-    cd "$srcdir/$pkgname-$pkgver"
+package_wstool() {
+    pkgdesc="A tool for managing the workspace of a ROS package, resurrected for ROS2"
+    cd "$srcdir/$pkgbase-$pkgver"
     python -m installer --destdir="$pkgdir" dist/*.whl
+}
+
+package_vcstools() {
+    pkgdesc="A version control system tool for ROS"
+    cd "$srcdir/vcstools"
+    python setup.py install --root="${pkgdir}" --optimize=1 --skip-build
 }
