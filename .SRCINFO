@@ -1,6 +1,6 @@
 pkgbase = wstool
 	pkgdesc = A tool for managing the workspace of a ROS package, resurrected for ROS2
-	pkgver = 0.2.1
+	pkgver = 0.2.2
 	pkgrel = 1
 	url = https://github.com/IAS-PERCRO-LAB/wstool
 	arch = any
@@ -9,7 +9,7 @@ pkgbase = wstool
 	depends = python>=3.8
 	depends = python-vcstools
 	depends = python-yaml
-	source = wstool-0.2.1.tar.gz::https://github.com/IAS-PERCRO-LAB/wstool/archive/0.2.1.tar.gz
-	sha256sums = 3d754b89c8e83b3792748086a1173819aa013155e3f4cb92df5d71046f104295
+	source = wstool-0.2.2.tar.gz::https://github.com/IAS-PERCRO-LAB/wstool/archive/0.2.2.tar.gz
+	sha256sums = SKIP
 
 pkgname = wstool

@@ -1,6 +1,6 @@
 # Maintainer: Michael Mugnai <michael.mugnai@gmail.com>
 pkgname=wstool
-pkgver=0.2.1
+pkgver=0.2.2
 pkgrel=1
 pkgdesc="A tool for managing the workspace of a ROS package, resurrected for ROS2"
 arch=('any')
@@ -17,7 +17,7 @@ makedepends=('poetry')
 #     'python-mock'
 # )
 source=("$pkgname-$pkgver.tar.gz::$url/archive/$pkgver.tar.gz")
-sha256sums=('3d754b89c8e83b3792748086a1173819aa013155e3f4cb92df5d71046f104295')
+sha256sums=('SKIP')
 
 build() {
     cd "$srcdir/$pkgname-$pkgver"
