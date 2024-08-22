@@ -15,7 +15,10 @@
 import sys
 import os
 
-import imp
+if sys.version_info < (3, 12):
+    import imp
+else:
+    import importlib as imp
 
 file = None
 try:
